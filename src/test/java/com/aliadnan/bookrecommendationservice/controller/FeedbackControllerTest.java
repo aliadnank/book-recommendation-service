@@ -2,7 +2,6 @@ package com.aliadnan.bookrecommendationservice.controller;
 
 import com.aliadnan.bookrecommendationservice.domain.User;
 import com.aliadnan.bookrecommendationservice.service.UserService;
-import com.aliadnan.bookrecommendationservice.util.BooksLoader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,8 +30,6 @@ public class FeedbackControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private BooksLoader booksLoader;
-    @Autowired
     private UserService userService;
 
     private User registeredUser;
@@ -40,7 +37,6 @@ public class FeedbackControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        booksLoader.loadBooks();
         User user = new User("Test","Test");
         registeredUser = userService.register(user);
     }

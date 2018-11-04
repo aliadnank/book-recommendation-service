@@ -22,7 +22,6 @@ public class BooksLoaderTest {
 
     @Test
     public void testLoad() {
-        booksLoader.loadBooks();
-        Assert.assertEquals(Optional.of(2198), Optional.of(booksLoader.getTotalRecords()));
+        Assert.assertEquals(Optional.of(1099), Optional.of(booksLoader.getTotalRecords()));
     }
 }

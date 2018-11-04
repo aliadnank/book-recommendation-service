@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class BookRecommendationServiceApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(BookRecommendationServiceApplication.class, args);
 	}

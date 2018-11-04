@@ -1,9 +1,7 @@
 package com.aliadnan.bookrecommendationservice.service;
 
 import com.aliadnan.bookrecommendationservice.domain.Book;
-import com.aliadnan.bookrecommendationservice.util.BooksLoader;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +19,9 @@ import java.util.List;
 public class BookServiceTest {
     @Autowired
     private BookService bookService;
-    @Autowired
-    private BooksLoader booksLoader;
 
     public BookServiceTest() {
     }
-
-    @Before
-    public void setup(){
-        booksLoader.loadBooks();
-    }
-
     @Test
     public void testGetRecommendations() {
         List<Book> books = bookService.getRecommendations();

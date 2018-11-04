@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.logging.Logger;
 
 /**
@@ -36,27 +36,31 @@ public class BooksLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws IOException {
         loadBooks();
     }
 
-    public void loadBooks() {
-        File file = new File(getClass().getClassLoader().getResource(propsUtils.getValue("csv.file.name")).getFile());
+    public void loadBooks()  {
+        InputStream is = getClass().getClassLoader().getResourceAsStream(propsUtils.getValue("csv.file.name"));
+
         CsvReader csvReader = new CsvReader();
         csvReader.setContainsHeader(true);
         csvReader.setFieldSeparator(';');
-        try (CsvParser csvParser = csvReader.parse(file, StandardCharsets.UTF_8)) {
+        try (CsvParser csvParser = csvReader.parse(new InputStreamReader(is))) {
             CsvRow row;
             while ((row = csvParser.nextRow()) != null) {
                 Book book = new Book(row.getField(1),row.getField(2),row.getField(0),row.getField(3));
                 bookService.insert(book);
                 totalRecords++;
             }
+            logger.info("Loaded total "+totalRecords+" records");
         } catch (IOException e) {
             logger.severe("Couldn't load the books from the file "+ e.getMessage());
+            e.printStackTrace();
         }
         catch (Exception e) {
             logger.severe("Couldn't load the books from the file "+ e.getMessage());
+            e.printStackTrace();
         }
     }
 
